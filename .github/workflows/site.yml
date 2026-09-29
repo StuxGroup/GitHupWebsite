@@ -1,0 +1,76 @@
+# Checks the demo monitors with GitHup, then builds githup.stux.group
+# (site/ plus the GitHup status page at /demo/) and deploys it to GitHub Pages.
+name: Site
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # GitHup check (GitHub may run it a little late)
+    - cron: "7 * * * *"     # hourly rebuild, so "updated" times stay fresh
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - site/**
+      - .githup.yml
+      - .github/workflows/site.yml
+
+permissions:
+  contents: write   # commit monitoring data
+  issues: write     # open and close incident Issues
+  pages: write      # deploy to GitHub Pages
+  id-token: write
+
+# One run at a time so data commits and deployments never race.
+concurrency:
+  group: site
+  cancel-in-progress: false
+
+jobs:
+  check:
+    # Pushes only change the website, so they skip straight to the build.
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      changed: ${{ steps.check.outputs.status-changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - id: check
+        uses: StuxGroup/GitHup@v1
+        with:
+          mode: check
+
+  deploy:
+    needs: check
+    # Rebuild on pushes and manual runs, when a status changed, and hourly.
+    if: >-
+      always() && (
+        github.event_name != 'schedule' ||
+        needs.check.outputs.changed == 'true' ||
+        github.event.schedule == '7 * * * *'
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}  # includes the data just committed
+      - uses: actions/configure-pages@v5
+      - name: Copy the website
+        run: cp -r site _site
+      - name: Build the demo status page into /demo
+        uses: StuxGroup/GitHup@v1
+        with:
+          mode: site
+          deploy: "false"
+          site-dir: _site/demo
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,42 @@
+# GitHup demo: the status page served at https://githup.stux.group/demo/
+# Checked every 5 minutes by .github/workflows/site.yml. Docs: https://github.com/StuxGroup/GitHup
+site:
+  name: GitHup Demo
+  description: A live GitHup status page, built by the GitHup action from this website's own repository. It checks a few Stux.Group services every 5 minutes.
+  logo: https://githup.stux.group/assets/icon.svg
+  favicon: https://githup.stux.group/assets/icon.png
+  accent: "#8f7dff"
+  legal: https://githup.stux.group/legal/
+  footer_links:
+    - label: GitHup website
+      url: https://githup.stux.group/
+    - label: GitHup on GitHub
+      url: https://github.com/StuxGroup/GitHup
+
+defaults:
+  timeout: 15
+  retries: 2
+  max_response_time: 2000
+
+monitors:
+  - name: GitHup Website
+    url: https://githup.stux.group/
+    description: This website, on GitHub Pages
+  - name: Stux.Group
+    url: https://stux.group/
+    description: The Stux.Group website
+  - name: Stux.Group Services
+    url: https://services.stux.group/
+    description: The directory of Stux.Group services
+  - name: Stux.Group Media CDN
+    url: https://global.media.stux.group/icon.png
+    description: Shared logos and images
+  - name: Stuxedo
+    url: https://stuxedo.com/
+    description: Stux.Group's hosting provider
+  - name: GitHub
+    url: https://github.com/
+    description: Where all of the above is checked from
+
+incidents:
+  labels: [demo]
