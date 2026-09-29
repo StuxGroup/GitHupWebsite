@@ -3,6 +3,16 @@
 All notable changes to GitHupWebsite (githup.stux.group) are documented here. It follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.0.1
+
+### Changed
+
+- The site workflow now uses `actions/checkout@v7`, `actions/configure-pages@v6`, `actions/upload-pages-artifact@v5` and `actions/deploy-pages@v5`, which run on Node 24, clearing GitHub's Node 20 deprecation warnings
+
+### Fixed
+
+- `commit.sh` and `dev-server.sh` are now committed as executable, so `./commit.sh` and `./dev-server.sh` run straight from a fresh clone on macOS and Linux
+
 ## v1.0.0
 
 ### Added
