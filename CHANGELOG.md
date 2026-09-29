@@ -3,6 +3,12 @@
 All notable changes to GitHupWebsite (githup.stux.group) are documented here. It follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.0.2
+
+### Changed
+
+- The home page's quick-start workflow snippet uses `actions/checkout@v7`, matching GitHup v1.2.1's template
+
 ## v1.0.1
 
 ### Changed
