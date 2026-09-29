@@ -28,15 +28,36 @@ monitors:
   - name: Stux.Group Services
     url: https://services.stux.group/
     description: The directory of Stux.Group services
+  - name: Stux.Dev
+    url: https://stux.dev/
+    description: Stux.Group's developer tools brand
+  - name: Stuxedo
+    url: https://stuxedo.com/
+    description: Stux.Group's hosting and cloud provider
+  - name: Stux.Music
+    url: https://stux.music/
+    description: Independent music, done right
+  - name: Ream.st
+    url: https://ream.st/
+    description: Multi-view stream viewers
+  - name: Multi.st Twitch
+    url: https://twitch.multi.st/
+    description: Watch several Twitch streams at once
+  - name: Multi.st YouTube
+    url: https://youtube.multi.st/
+    description: Watch several YouTube streams at once
   - name: Stux.Group Media CDN
     url: https://global.media.stux.group/icon.png
     description: Shared logos and images
-  - name: Stuxedo
-    url: https://stuxedo.com/
-    description: Stux.Group's hosting provider
-  - name: GitHub
-    url: https://github.com/
-    description: Where all of the above is checked from
+  # Deliberately broken, so the demo always shows what an outage looks like: this host only
+  # redirects to stux.group, and with redirects off the 302 does not count as up.
+  - name: Always Down (on purpose)
+    slug: always-down
+    url: https://thispagedoesnotexist.stuxgroup.net/
+    description: This monitor is meant to fail, to show how GitHup reports an outage
+    expected: [200]
+    follow_redirects: false
+    retries: 0
 
 incidents:
   labels: [demo]

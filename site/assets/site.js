@@ -67,6 +67,12 @@
     var mons = summary.monitors || [];
     if (!mons.length) return;
     list.textContent = "";
+    // Problems first, so an outage is always visible in the preview.
+    var rank = { down: 0, degraded: 1 };
+    mons = mons.map(function (m, i) { return { m: m, i: i }; }).sort(function (a, b) {
+      var ra = a.m.status in rank ? rank[a.m.status] : 2, rb = b.m.status in rank ? rank[b.m.status] : 2;
+      return ra - rb || a.i - b.i;
+    }).map(function (x) { return x.m; });
     mons.slice(0, 6).forEach(function (m) {
       var st = ["up", "degraded", "down"].indexOf(m.status) >= 0 ? m.status : "unknown";
       var li = el("li", "mon");

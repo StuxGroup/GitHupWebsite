@@ -3,6 +3,21 @@
 All notable changes to GitHupWebsite (githup.stux.group) are documented here. It follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.1.0
+
+### Added
+
+- An "Always Down (on purpose)" demo monitor for `thispagedoesnotexist.stuxgroup.net`, which only redirects to stux.group; with `follow_redirects: false` and `expected: [200]` its 302 counts as down, so the demo always shows what an outage and its incident Issue look like
+- Demo monitors for more Stux.Group services and companies: Stux.Dev, Stux.Music, Ream.st, Multi.st Twitch and Multi.st YouTube
+
+### Changed
+
+- The home page's live preview lists down and degraded monitors first, so an outage is always visible in it
+
+### Removed
+
+- The GitHub monitor from the demo, which now only checks Stux.Group services
+
 ## v1.0.2
 
 ### Changed

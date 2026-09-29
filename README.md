@@ -18,7 +18,8 @@
   `/legal/` with its six sub-pages, and `assets/`). Plain HTML, one stylesheet and one small
   script, no build step. The look follows GitHup's social preview: dark `#0d1117` with the
   purple-to-blue (`#b06bff` → `#3ba7ff`) gradient.
-- **`.githup.yml`**: the demo's monitors (a few Stux.Group services, plus GitHub).
+- **`.githup.yml`**: the demo's monitors: Stux.Group services and companies, plus one monitor
+  (`thispagedoesnotexist.stuxgroup.net`) that is meant to be down, so the demo always shows an outage.
 - **`data/`**: the demo's monitoring history, committed by `github-actions[bot]` every 5 minutes.
 - **`.github/workflows/site.yml`**: runs a GitHup `check` every 5 minutes, then (when a status
   changes, hourly, and on every push to `site/`) copies `site/` into `_site`, builds the GitHup
