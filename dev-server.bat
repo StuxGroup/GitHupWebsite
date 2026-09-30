@@ -46,6 +46,9 @@ set "PYTHONDONTWRITEBYTECODE=1"
 
 if exist .dev\public rmdir /s /q .dev\public
 xcopy site .dev\public\ /e /i /q >nul || exit /b 1
+REM CHANGELOG.md and VERSION.md feed /changelogs/ and the footer version link.
+copy /y CHANGELOG.md .dev\public\ >nul || exit /b 1
+copy /y VERSION.md .dev\public\ >nul || exit /b 1
 python -m githup demo --config .githup.yml --data-dir .dev/data || exit /b 1
 python -m githup site --config .githup.yml --data-dir .dev/data --incidents-file .dev/data/incidents.json --out .dev/public/demo --no-deploy || exit /b 1
 

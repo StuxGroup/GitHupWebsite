@@ -14,15 +14,22 @@
 
 ## What's here
 
-- **`site/`**: the static website (home page, `404.html`, the **Boring Legal Stuff** hub at
-  `/legal/` with its six sub-pages, and `assets/`). Plain HTML, one stylesheet and one small
-  script, no build step. The look follows GitHup's social preview: dark `#0d1117` with the
-  purple-to-blue (`#b06bff` → `#3ba7ff`) gradient.
-- **`.githup.yml`**: the demo's monitors: Stux.Group services and companies, plus one monitor
-  (`thispagedoesnotexist.stuxgroup.net`) that is meant to be down, so the demo always shows an outage.
+- **`site/`**: the static website (home page, `/docs/`, `/changelogs/` (with a redirect from
+  `/changelog/`), `404.html`, the **Boring Legal Stuff** hub at `/legal/` with its six
+  sub-pages, and `assets/`). Plain HTML, one stylesheet and a few small
+  scripts, no build step. The look follows GitHup's social preview: the purple-to-blue
+  (`#b06bff` → `#3ba7ff`) gradient on dark `#0d1117`, or on a light theme that follows the
+  system until the header toggle picks one. `/docs/` renders GitHup's README (from the `v1`
+  tag) in the browser, the same way `/changelogs/` renders the changelogs.
+- **`.githup.yml`**: the demo's monitors, in groups: Stux.Group services and companies, plus a
+  collapsed *Outage demo* group whose monitor (`thispagedoesnotexist.stuxgroup.net`) is meant
+  to be down, so the demo always shows an outage and a group opening itself.
+- **`CHANGELOG.md`** and **`VERSION.md`** are published with the site: `/changelogs/` renders
+  the changelog (next to GitHup's own, fetched from its `v1` tag) and every footer shows the
+  version.
 - **`data/`**: the demo's monitoring history, committed by `github-actions[bot]` every 5 minutes.
 - **`.github/workflows/site.yml`**: runs a GitHup `check` every 5 minutes, then (when a status
-  changes, hourly, and on every push to `site/`) copies `site/` into `_site`, builds the GitHup
+  changes, hourly, and on every push to `site/`) copies `site/`, `CHANGELOG.md` and `VERSION.md` into `_site`, builds the GitHup
   status page into `_site/demo` with `site-dir`, and deploys `_site` with `actions/deploy-pages`.
 
 Incidents on the demo are real: when a demo monitor goes down, GitHup opens an Issue on this

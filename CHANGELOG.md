@@ -3,6 +3,25 @@
 All notable changes to GitHupWebsite (githup.stux.group) are documented here. It follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.2.0
+
+### Added
+
+- A **Docs** section at `/docs/`: GitHup's README, fetched from the `v1` tag and rendered in the page (like the changelogs), so the docs always match the release every `@v1` workflow runs and never need copying; headings get anchors matching GitHub's, code blocks a copy button, relative links point into the repo, and the table of contents is built from the headings, beside the text on wide screens and folded away on phones; linked from the header and the footer
+- A **Changelogs** page at `/changelogs/` with a tab for this website and a tab for the GitHup action (the `v1` release), each showing its current version; `/changelogs/#website` and `/changelogs/#githup` open a tab directly, and sections always render as Added, Changed, Fixed, Removed, Security, Deprecated with the standard badge colours
+- `/changelog/` redirects to `/changelogs/`, keeping the `#tab`
+- A light theme across the whole site: it follows the system setting until the new header toggle picks light or dark, and remembers that choice under the same key GitHup status pages use, so the site and `/demo/` stay in step; the logo, code blocks and changelog badges (darker shades of the standard colours) all switch with it
+- Three home page feature cards: **Groups**, **Deploy your way** and **A config that catches typos**
+- The demo's status page footer links to `/changelogs/`, labelled with this website's version (`site.changelog`, GitHup v1.4.0)
+
+### Changed
+
+- The footer's Stux.Group logo link is replaced by the website's version number (read from `VERSION.md`), linking to `/changelogs/`; "A Stux.Group Service" stays
+- The footer's **Documentation** and **Changelogs** links now open `/docs/` and `/changelogs/` instead of GitHub, and the quick start's "README" link points at the docs
+- The demo groups its monitors (GitHup v1.4.0 `groups`): GitHup Website ungrouped, then **Stux.Group**, **Brands**, **Streaming** and a collapsed **Outage demo** group, which opens itself because its monitor is always down
+- The site build and `dev-server.sh`/`.bat` publish `CHANGELOG.md` and `VERSION.md` with the site, and pushes that change either file redeploy it
+- The Privacy Policy mentions that the changelogs page loads GitHup's changelog, and the docs load GitHup's README, from `raw.githubusercontent.com`
+
 ## v1.1.0
 
 ### Added

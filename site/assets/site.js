@@ -13,17 +13,102 @@
   var banner = document.getElementById("dev-banner");
   if (banner && LOCAL && !NODEV) banner.classList.add("on");
 
-  // Copy buttons on code blocks.
-  Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
-    btn.addEventListener("click", function () {
-      var pre = document.getElementById(btn.getAttribute("data-copy"));
-      if (!pre || !navigator.clipboard) return;
-      navigator.clipboard.writeText(pre.textContent).then(function () {
-        btn.textContent = "Copied";
-        setTimeout(function () { btn.textContent = "Copy"; }, 1600);
-      });
+  // Theme toggle: follows the system until clicked, then remembers the choice under the same
+  // key GitHup status pages use, so the site and /demo/ stay in step.
+  var root = document.documentElement;
+  var themeBtn = document.getElementById("theme-toggle");
+  var darkMq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+  function effectiveTheme() {
+    var t = root.getAttribute("data-theme");
+    if (t === "light" || t === "dark") return t;
+    return darkMq && !darkMq.matches ? "light" : "dark";
+  }
+  function syncThemeBtn() {
+    if (!themeBtn) return;
+    var dark = effectiveTheme() === "dark";
+    themeBtn.setAttribute("aria-pressed", dark ? "true" : "false");
+    themeBtn.setAttribute("aria-label", "Switch to " + (dark ? "light" : "dark") + " theme");
+    themeBtn.title = themeBtn.getAttribute("aria-label");
+  }
+  if (themeBtn) {
+    themeBtn.addEventListener("click", function () {
+      var next = effectiveTheme() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("githup-theme", next); } catch (e) {}
+      syncThemeBtn();
+    });
+  }
+  if (darkMq && darkMq.addEventListener) darkMq.addEventListener("change", syncThemeBtn);
+  syncThemeBtn();
+
+  // Copy buttons on code blocks (delegated, so blocks rendered later work too).
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest && e.target.closest("[data-copy]");
+    if (!btn) return;
+    var pre = document.getElementById(btn.getAttribute("data-copy"));
+    if (!pre || !navigator.clipboard) return;
+    navigator.clipboard.writeText(pre.textContent).then(function () {
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = "Copy"; }, 1600);
     });
   });
+
+  // Footer version link: the website's own VERSION.md, published with the site.
+  var versionLinks = document.querySelectorAll("[data-site-version]");
+  if (versionLinks.length && window.fetch) {
+    fetch("/VERSION.md", { cache: "no-cache" }).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.text();
+    }).then(function (v) {
+      v = v.trim().replace(/^v/i, "");
+      if (!/^\d+\.\d+\.\d+/.test(v)) return;
+      Array.prototype.forEach.call(versionLinks, function (a) {
+        a.textContent = "v" + v;
+        a.setAttribute("title", "Website v" + v + ": changelogs");
+      });
+    }).catch(function () {});
+  }
+
+  // Docs table of contents: always open on wide screens, collapsible on narrow ones, and
+  // highlights the section being read. docs.js fills it in after rendering the README, then
+  // fires "githup:docs-ready".
+  function initToc() {
+    var toc = document.querySelector(".toc details");
+    if (!toc || toc.hasAttribute("data-ready")) return;
+    toc.setAttribute("data-ready", "");
+    var wide = window.matchMedia ? window.matchMedia("(min-width: 981px)") : null;
+    var syncToc = function () { if (!wide || wide.matches) toc.open = true; };
+    // The HTML ships it open (so it works without JS); phones start with it folded away.
+    if (wide && !wide.matches) toc.open = false;
+    syncToc();
+    if (wide && wide.addEventListener) wide.addEventListener("change", syncToc);
+    toc.addEventListener("click", function (e) {
+      if (e.target.closest("a") && wide && !wide.matches) toc.open = false;
+    });
+    var tocLinks = {};
+    Array.prototype.forEach.call(toc.querySelectorAll("a[href^='#']"), function (a) {
+      tocLinks[a.getAttribute("href").slice(1)] = a;
+    });
+    var heads = document.querySelectorAll(".prose h2[id], .prose h3[id]");
+    if ("IntersectionObserver" in window && heads.length) {
+      var current = null;
+      var visible = {};
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { visible[en.target.id] = en.isIntersecting; });
+        var pick = null;
+        for (var i = 0; i < heads.length; i++) {
+          if (visible[heads[i].id]) { pick = heads[i].id; break; }
+        }
+        if (!pick) return;
+        if (current && tocLinks[current]) tocLinks[current].classList.remove("active");
+        current = pick;
+        if (tocLinks[current]) tocLinks[current].classList.add("active");
+      }, { rootMargin: "-80px 0px -60% 0px" });
+      Array.prototype.forEach.call(heads, function (h) { io.observe(h); });
+    }
+  }
+  document.addEventListener("githup:docs-ready", initToc);
+  if (!document.querySelector(".docs-page[data-readme]")) initToc();
 
   // Live demo preview on the home page.
   var list = document.getElementById("demo-monitors");

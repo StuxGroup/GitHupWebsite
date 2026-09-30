@@ -44,6 +44,7 @@ export PYTHONPATH="$GITHUP" PYTHONDONTWRITEBYTECODE=1
 rm -rf .dev/public
 mkdir -p .dev
 cp -r site .dev/public
+cp CHANGELOG.md VERSION.md .dev/public/   # for /changelogs/ and the footer version
 "$PY" -m githup demo --config .githup.yml --data-dir .dev/data
 "$PY" -m githup site --config .githup.yml --data-dir .dev/data \
     --incidents-file .dev/data/incidents.json --out .dev/public/demo --no-deploy

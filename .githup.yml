@@ -7,6 +7,7 @@ site:
   favicon: https://githup.stux.group/assets/icon.png
   accent: "#8f7dff"
   legal: https://githup.stux.group/legal/
+  changelog: https://githup.stux.group/changelogs/   # footer link, labelled with VERSION.md (GitHup v1.4.0+)
   footer_links:
     - label: GitHup website
       url: https://githup.stux.group/
@@ -18,46 +19,67 @@ defaults:
   retries: 2
   max_response_time: 2000
 
+# Ungrouped monitors come first; the groups below each get a collapsible section with a
+# combined status. Slugs come from the names, so grouping keeps every monitor's history.
 monitors:
   - name: GitHup Website
     url: https://githup.stux.group/
     description: This website, on GitHub Pages
+
+groups:
   - name: Stux.Group
-    url: https://stux.group/
-    description: The Stux.Group website
-  - name: Stux.Group Services
-    url: https://services.stux.group/
-    description: The directory of Stux.Group services
-  - name: Stux.Dev
-    url: https://stux.dev/
-    description: Stux.Group's developer tools brand
-  - name: Stuxedo
-    url: https://stuxedo.com/
-    description: Stux.Group's hosting and cloud provider
-  - name: Stux.Music
-    url: https://stux.music/
-    description: Independent music, done right
-  - name: Ream.st
-    url: https://ream.st/
-    description: Multi-view stream viewers
-  - name: Multi.st Twitch
-    url: https://twitch.multi.st/
-    description: Watch several Twitch streams at once
-  - name: Multi.st YouTube
-    url: https://youtube.multi.st/
-    description: Watch several YouTube streams at once
-  - name: Stux.Group Media CDN
-    url: https://global.media.stux.group/icon.png
-    description: Shared logos and images
-  # Deliberately broken, so the demo always shows what an outage looks like: this host only
-  # redirects to stux.group, and with redirects off the 302 does not count as up.
-  - name: Always Down (on purpose)
-    slug: always-down
-    url: https://thispagedoesnotexist.stuxgroup.net/
-    description: This monitor is meant to fail, to show how GitHup reports an outage
-    expected: [200]
-    follow_redirects: false
-    retries: 0
+    description: The Stux.Group websites and shared media.
+    monitors:
+      - name: Stux.Group
+        url: https://stux.group/
+        description: The Stux.Group website
+      - name: Stux.Group Services
+        url: https://services.stux.group/
+        description: The directory of Stux.Group services
+      - name: Stux.Group Media CDN
+        url: https://global.media.stux.group/icon.png
+        description: Shared logos and images
+
+  - name: Brands
+    monitors:
+      - name: Stux.Dev
+        url: https://stux.dev/
+        description: Stux.Group's developer tools brand
+      - name: Stuxedo
+        url: https://stuxedo.com/
+        description: Stux.Group's hosting and cloud provider
+      - name: Stux.Music
+        url: https://stux.music/
+        description: Independent music, done right
+
+  - name: Streaming
+    description: Multi-view stream viewers.
+    monitors:
+      - name: Ream.st
+        url: https://ream.st/
+        description: Multi-view stream viewers
+      - name: Multi.st Twitch
+        url: https://twitch.multi.st/
+        description: Watch several Twitch streams at once
+      - name: Multi.st YouTube
+        url: https://youtube.multi.st/
+        description: Watch several YouTube streams at once
+
+  # Collapsed, but it opens itself because its monitor is always down, which is exactly
+  # what a collapsed group does during a real outage.
+  - name: Outage demo
+    description: A group that is always in trouble, to show how GitHup reports an outage.
+    collapsed: true
+    monitors:
+      # Deliberately broken: this host only redirects to stux.group, and with redirects off
+      # the 302 does not count as up.
+      - name: Always Down (on purpose)
+        slug: always-down
+        url: https://thispagedoesnotexist.stuxgroup.net/
+        description: This monitor is meant to fail, to show how GitHup reports an outage
+        expected: [200]
+        follow_redirects: false
+        retries: 0
 
 incidents:
   labels: [demo]

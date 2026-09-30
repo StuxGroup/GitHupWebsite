@@ -25,9 +25,17 @@ See the [README](README.md#local-development) for what it does.
   fonts. Pages use root-relative links (`/assets/…`, `/legal/…`), because the site is served
   from the root of `githup.stux.group`.
 - **Header and footer are repeated in every page.** When you change one, change all of them:
-  `index.html`, `404.html`, `legal/index.html` and the six `legal/*/index.html` pages.
+  `index.html`, `404.html`, `docs/index.html`, `changelogs/index.html`, `legal/index.html` and
+  the six `legal/*/index.html` pages. Each page's `<head>` also carries the one-line theme boot
+  script, so the chosen theme applies before the page paints.
 - **Brand.** Dark `#0d1117` background, text `#f0f3f6` / `#c9d1d9`, muted `#8b949e`, and the
-  `#b06bff` → `#3ba7ff` gradient from GitHup's social preview. The logo files in `site/assets/`
+  `#b06bff` → `#3ba7ff` gradient from GitHup's social preview. The light theme uses `#f6f7fb` /
+  white with `#16181d` / `#3b4250` text. Every colour is a token on `:root` in `site.css`,
+  redefined for light under `prefers-color-scheme: light` and `[data-theme="light"]`; add new
+  colours as tokens in both places, never inline. The theme choice is stored under
+  `githup-theme`, the same key GitHup status pages use, so the site and `/demo/` agree.
+- **Docs.** `/docs/` is GitHup's `README.md`, fetched from the `v1` tag and rendered by
+  `assets/docs.js`; to change the docs, change the README in the GitHup repo. The logo files in `site/assets/`
   are copies of the ones in the GitHup repo; update both together.
 - **Legal pages.** The footer always links to **Boring Legal Stuff** at `/legal/`, which links to
   Privacy Policy, Terms and Ethics, Cookies Policy, Imprint, Disclaimer and Opt-Out Preferences.

@@ -12,6 +12,8 @@ on:
     paths:
       - site/**
       - .githup.yml
+      - CHANGELOG.md
+      - VERSION.md
       - .github/workflows/site.yml
 
 permissions:
@@ -62,7 +64,10 @@ jobs:
           ref: ${{ github.event.repository.default_branch }}  # includes the data just committed
       - uses: actions/configure-pages@v6
       - name: Copy the website
-        run: cp -r site _site
+        # CHANGELOG.md and VERSION.md feed /changelogs/ and the footer version link.
+        run: |
+          cp -r site _site
+          cp CHANGELOG.md VERSION.md _site/
       - name: Build the demo status page into /demo
         uses: StuxGroup/GitHup@v1
         with:
