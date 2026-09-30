@@ -39,7 +39,7 @@ repository labelled `githup`, `incident` and `demo`, and closes it on recovery.
 
 ```bash
 ./dev-server.sh                 # or dev-server.bat on Windows; add a port as the last argument
-./dev-server.sh --no-dev-mode   # production rendering; open /?nodev=1 to hide the site banner
+./dev-server.sh --no-dev-mode   # production rendering, no dev banner
 ```
 
 `dev-server` copies `site/` into `.dev/public`, generates 90 days of example data for the demo

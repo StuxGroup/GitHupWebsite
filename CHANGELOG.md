@@ -3,6 +3,20 @@
 All notable changes to GitHupWebsite (githup.stux.group) are documented here. It follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.3.0
+
+### Added
+
+- A **Created with** line in the footer of every page: a heart, code brackets and a coffee mug, by Stux.Group
+
+### Changed
+
+- The dev-mode banner is the shared Stux site banner: a muted strip with a label chip and a faint icon pattern, replacing the yellow hazard stripes. It stays at the top and pushes the page down by its exact height, and the sticky header and the docs' table of contents sit below it, so nothing is covered, including on phones. In dev mode, `?banner=soon,maintenance,site` previews the other banner styles
+- The dev banner is switched on by `dev-server.sh`/`.bat` (they write `assets/dev-mode.js` into the local build) instead of by looking at the hostname, so `--no-dev-mode` now hides it; the old `?nodev=1` is gone
+- The footer's GitHup logo is muted until hovered or focused, fading in smoothly (the same filter functions in every state), and "A Stux.Group Service" fades the same way
+- The footer's copyright sign is an icon, with a hidden "©" for screen readers
+- `dev-server.sh` also finds the GitHup checkout at `../../Stux.Group/GitHup`
+
 ## v1.2.0
 
 ### Added

@@ -12,7 +12,7 @@
 # GitHup itself is found at $GITHUP_PATH, else ../GitHup (a sibling checkout),
 # else it is cloned into .dev/GitHup.
 # DEV_MODE is on by default: the demo shows GitHup's DEV MODE banner and the
-# website shows its own on localhost (?nodev=1 hides the website's banner).
+# website's own pages show the shared dev banner too (--no-dev-mode hides both).
 set -e
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -34,6 +34,8 @@ GITHUP="${GITHUP_PATH:-}"
 if [ -z "$GITHUP" ]; then
     if [ -f "$DIR/../GitHup/githup/__init__.py" ]; then
         GITHUP="$DIR/../GitHup"
+    elif [ -f "$DIR/../../Stux.Group/GitHup/githup/__init__.py" ]; then
+        GITHUP="$DIR/../../Stux.Group/GitHup"
     else
         GITHUP="$DIR/.dev/GitHup"
         [ -d "$GITHUP" ] || git clone --depth 1 https://github.com/StuxGroup/GitHup.git "$GITHUP"
@@ -45,6 +47,11 @@ rm -rf .dev/public
 mkdir -p .dev
 cp -r site .dev/public
 cp CHANGELOG.md VERSION.md .dev/public/   # for /changelogs/ and the footer version
+# The site pages show the dev banner when assets/dev-mode.js says so; the committed copy says
+# false, so only this local build gets true.
+if [ "$DEV_MODE" = "1" ]; then
+    echo "window.DEV_MODE = true;" > .dev/public/assets/dev-mode.js
+fi
 "$PY" -m githup demo --config .githup.yml --data-dir .dev/data
 "$PY" -m githup site --config .githup.yml --data-dir .dev/data \
     --incidents-file .dev/data/incidents.json --out .dev/public/demo --no-deploy
@@ -52,6 +59,6 @@ cp CHANGELOG.md VERSION.md .dev/public/   # for /changelogs/ and the footer vers
 if [ "$DEV_MODE" = "1" ]; then
     echo "GitHup website (DEV_MODE=1) at http://127.0.0.1:$PORT/  -  demo at http://127.0.0.1:$PORT/demo/"
 else
-    echo "GitHup website (production rendering) at http://127.0.0.1:$PORT/?nodev=1  -  demo at http://127.0.0.1:$PORT/demo/"
+    echo "GitHup website (production rendering) at http://127.0.0.1:$PORT/  -  demo at http://127.0.0.1:$PORT/demo/"
 fi
 "$PY" -m http.server "$PORT" --bind 127.0.0.1 --directory .dev/public

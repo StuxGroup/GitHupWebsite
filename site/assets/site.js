@@ -3,15 +3,39 @@
   "use strict";
 
   var LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-  var NODEV = /(?:^|[?&])nodev=1(?:&|$)/.test(location.search);
   // Live data straight from the repo (updated every check); /demo/summary.json is the copy
   // published with each site build.
   var LIVE = "https://raw.githubusercontent.com/StuxGroup/GitHupWebsite/main/data/summary.json";
   var LOCAL_SUMMARY = "/demo/summary.json";
 
-  // Dev banner: on for local previews, unless ?nodev=1 asks for the production look.
-  var banner = document.getElementById("dev-banner");
-  if (banner && LOCAL && !NODEV) banner.classList.add("on");
+  // Dev-only banners, in the shared site-banner component. dev-mode.js sets DEV_MODE (true only in
+  // the local build dev-server makes); ?banner=soon,maintenance,site previews the other styles.
+  if (window.DEV_MODE) {
+    var copy = {
+      maintenance: ["Maintenance", "GitHup is being updated and will be back shortly."],
+      soon: ["Coming soon", "GitHup is launching soon."],
+      dev: ["Dev mode", "Local preview of the GitHup website. Run <code>dev-server.sh --no-dev-mode</code> to see it as production does."],
+      site: ["Notice", "A site notice for the GitHup website appears here."]
+    };
+    var want = (new URLSearchParams(location.search).get("banner") || "").split(",");
+    var box = document.createElement("div");
+    box.className = "site-banners";
+    box.setAttribute("data-site-banners", "");
+    ["maintenance", "soon", "dev", "site"].forEach(function (v) {
+      if (v !== "dev" && want.indexOf(v) < 0) return;
+      var d = document.createElement("div");
+      d.className = "site-banner site-banner--" + v;
+      d.setAttribute("role", "note");
+      d.innerHTML = '<span class="site-banner-label"></span><span class="site-banner-text">' + copy[v][1] + "</span>";
+      d.firstChild.textContent = copy[v][0];
+      box.appendChild(d);
+    });
+    document.body.insertBefore(box, document.body.firstChild);
+    document.documentElement.classList.add("has-site-banner");
+    var bs = document.createElement("script");
+    bs.src = "/assets/site-banner.js";
+    document.body.appendChild(bs);
+  }
 
   // Theme toggle: follows the system until clicked, then remembers the choice under the same
   // key GitHup status pages use, so the site and /demo/ stay in step.

@@ -91,7 +91,7 @@
   --syn-k: #8250df; --syn-s: #0a3069; --syn-c: #6e7781; --syn-n: #0550ae;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 80px; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(80px + var(--banner-h, 0px)); }
 body {
   margin: 0; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column;
   background:
@@ -112,13 +112,12 @@ code { font-family: var(--mono); font-size: .88em; background: var(--card-hi); b
 .wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 24px; }
 .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-/* dev banner (shown on localhost only, see site.js) */
-.dev-banner { display: none; background: repeating-linear-gradient(135deg, #ffd33d, #ffd33d 12px, #f0b400 12px, #f0b400 24px); color: #1f2328; text-align: center; font-weight: 700; font-size: 14px; padding: 6px 16px; }
-.dev-banner.on { display: block; }
-.dev-banner code { background: rgba(31, 35, 40, .12); border-color: rgba(31, 35, 40, .35); color: #1f2328; }
+/* The shared site banner (site-banner.css, shown in dev mode, see site.js) in this site's colours.
+   Sticky things below it move down by its height, --banner-h. */
+.site-banners { --banner-page-bg: var(--bg); --banner-text: var(--text); --banner-site: #b06bff; --banner-site-light: #7b3fc4; }
 
 /* header */
-.top { position: sticky; top: 0; z-index: 20; background: var(--top-bg); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid var(--top-border); }
+.top { position: sticky; top: var(--banner-h, 0px); z-index: 20; background: var(--top-bg); backdrop-filter: saturate(1.4) blur(12px); -webkit-backdrop-filter: saturate(1.4) blur(12px); border-bottom: 1px solid var(--top-border); }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
 .brand { display: inline-flex; align-items: center; flex: none; }
 .brand img { height: 34px; width: auto; display: block; }
@@ -233,22 +232,34 @@ code { font-family: var(--mono); font-size: .88em; background: var(--card-hi); b
 /* footer */
 footer { margin-top: auto; border-top: 1px solid var(--border); background: var(--foot-bg); }
 .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 28px; padding-top: 28px; padding-bottom: 20px; }
-.foot-brand img { height: 28px; width: auto; display: block; }
+/* Footer logo: 28px, muted until hovered. The same filter functions in every state, so the hover
+   animates smoothly (switching the filter off drops the image's layer and snaps). */
+.foot-brand img { height: 28px; width: auto; display: block; filter: grayscale(1) brightness(1); opacity: .7; transition: filter .2s ease, opacity .2s ease; will-change: filter, opacity; backface-visibility: hidden; transform: translateZ(0); }
+:root[data-theme="light"] .foot-brand img { filter: grayscale(1) brightness(.6); }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .foot-brand img { filter: grayscale(1) brightness(.6); } }
+:root .foot-brand:hover img, :root .foot-brand:focus-visible img { filter: grayscale(0) brightness(1); opacity: 1; }
 .foot-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 22px; }
 .foot-links a { color: var(--muted); text-decoration: none; font-size: 15px; }
 .foot-links a:hover { color: var(--text); }
 .foot-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding-top: 18px; padding-bottom: 28px; border-top: 1px solid var(--top-border); color: var(--muted); font-size: 14px; }
 .foot-bottom p { margin: 0; }
 .footer-powered { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; }
-.footer-powered-item { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); text-decoration: none; font-weight: 600; letter-spacing: .02em; }
-.footer-powered-item:hover { color: var(--text); }
-.footer-powered-logo { height: 18px; width: auto; opacity: .9; }
+.footer-powered-item { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); text-decoration: none; font-weight: 600; letter-spacing: .02em; transition: color .2s; }
+.footer-powered-item:hover, .footer-powered-item:focus-visible { color: var(--text); }
+.footer-powered-logo { height: 28px; width: auto; }
+.foot-created { margin: 0; }
+.foot-created a { color: var(--muted); font-weight: 600; text-decoration: none; transition: color .2s; }
+.foot-created a:hover, .foot-created a:focus-visible { color: var(--text); }
+.fc-i, .copy-i { display: inline-flex; vertical-align: -2px; }
+.fc-i svg, .copy-i svg { width: 14px; height: 14px; fill: currentColor; }
+.fc-love { color: #e5534b; } .fc-code { color: #2da44e; } .fc-coffee { color: #a0703c; }
+@media (prefers-reduced-motion: reduce) { .foot-brand img, .footer-powered-item, .foot-created a { transition: none; } }
 .footer-powered-sep { color: var(--border); }
 
 /* docs */
 .docs-page .wrap { max-width: 1120px; }
 .docs-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 40px; align-items: start; }
-.toc { position: sticky; top: 92px; max-height: calc(100vh - 110px); overflow-y: auto; font-size: 14.5px; }
+.toc { position: sticky; top: calc(92px + var(--banner-h, 0px)); max-height: calc(100vh - 110px - var(--banner-h, 0px)); overflow-y: auto; font-size: 14.5px; }
 .toc summary { display: none; cursor: pointer; font-weight: 700; color: var(--text); list-style: none; }
 .toc summary::-webkit-details-marker { display: none; }
 .toc-title { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
