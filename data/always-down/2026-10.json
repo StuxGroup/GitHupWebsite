@@ -1,0 +1,3 @@
+{"monitor":"always-down","month":"2026-10","fields":["t","status","code","ms"],"checks":[
+[1790814487,"down",302,90]
+]}
