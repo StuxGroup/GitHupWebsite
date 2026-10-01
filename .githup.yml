@@ -7,7 +7,6 @@ site:
   favicon: https://githup.stux.group/assets/icon.png
   accent: "#8f7dff"
   legal: https://githup.stux.group/legal/
-  changelog: https://githup.stux.group/changelogs/   # footer link, labelled with VERSION.md (GitHup v1.4.0+)
   footer_links:
     - label: GitHup website
       url: https://githup.stux.group/

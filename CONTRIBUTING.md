@@ -40,6 +40,7 @@ See the [README](README.md#local-development) for what it does.
 - **Legal pages.** The footer always links to **Boring Legal Stuff** at `/legal/`, which links to
   Privacy Policy, Terms and Ethics, Cookies Policy, Imprint, Disclaimer and Opt-Out Preferences.
   Keep them accurate when the site changes (for example if it ever adds analytics or cookies).
+- **Sitemap.** `site/sitemap.xml`, `site/sitemap/index.html` and `site/robots.txt` are generated: after adding or removing a page, edit the `PAGES` list in `scripts/build-sitemap.py` and run `python scripts/build-sitemap.py`, then commit the result. Every footer also links to **Sitemap** next to Boring Legal Stuff.
 - **Don't edit `data/` by hand.** It belongs to GitHup and the workflow.
 
 ## Versioning and changelog
