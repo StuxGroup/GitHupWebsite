@@ -3,6 +3,12 @@
 All notable changes to GitHupWebsite (githup.stux.group) are documented here. It follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.4.3
+
+### Changed
+
+- `max_response_time` raised to 15 seconds (GitHup's new default), so a slow but working site is no longer shown as degraded
+
 ## v1.4.2
 
 ### Changed
