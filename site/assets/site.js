@@ -205,3 +205,10 @@
     document.getElementById("demo-updated").textContent = "Live data unavailable right now";
   });
 })();
+
+/* Footer copyright: the start year alone in the first year, then START–CURRENT. */
+(function () {
+  function run() {var y=new Date().getFullYear();document.querySelectorAll('[data-copyright-years]').forEach(function(e){var s=parseInt(e.getAttribute('data-start'),10);e.textContent=s>=y?String(y):s+'–'+y;});}
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
+})();
