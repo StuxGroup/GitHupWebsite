@@ -251,7 +251,13 @@ footer { margin-top: auto; border-top: 1px solid var(--border); background: var(
 .foot-created a { color: var(--muted); font-weight: 600; text-decoration: none; transition: color .2s; }
 .foot-created a:hover, .foot-created a:focus-visible { color: var(--text); }
 .fc-i, .copy-i { display: inline-flex; vertical-align: -2px; }
-.fc-i svg, .copy-i svg { width: 14px; height: 14px; fill: currentColor; }
+.copy-i svg { width: 14px; height: 14px; fill: currentColor; }
+/* Created-with icons share a 1em box; heart/coffee are scaled optically so the solid heart is not bigger than the code icon */
+.fc-i { vertical-align: -0.125em; }
+.fc-i svg { width: 1em; height: 1em; fill: currentColor; }
+.fc-love { font-size: 0.85em; }
+.fc-code { font-size: 1em; }
+.fc-coffee { font-size: 0.95em; }
 .fc-love { color: #e5534b; } .fc-code { color: #2da44e; } .fc-coffee { color: #a0703c; }
 @media (prefers-reduced-motion: reduce) { .foot-brand img, .footer-powered-item, .foot-created a { transition: none; } }
 .footer-powered-sep { color: var(--border); }

@@ -3,6 +3,16 @@
 All notable changes to GitHupWebsite (githup.stux.group) are documented here. It follows
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.4.1
+
+### Changed
+
+- The copyright line reads Stux.Group instead of Stux Group Ltd
+
+### Fixed
+
+- The footer's Created-with icons are optically sized, so the heart no longer looks bigger than the code and coffee icons
+
 ## v1.4.0
 
 ### Added
