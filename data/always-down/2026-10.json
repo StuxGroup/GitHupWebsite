@@ -1,3 +1,4 @@
 {"monitor":"always-down","month":"2026-10","fields":["t","status","code","ms"],"checks":[
-[1790814487,"down",302,90]
+[1790814487,"down",302,90],
+[1790817964,"down",302,111]
 ]}
