@@ -118,7 +118,7 @@
     text(src.changelog).then(function (md) {
       body.innerHTML = render(md);
       if (!src.version) {
-        var top = md.match(/^##\s+v?(\d+\.\d+\.\d+)/m);
+        var top = md.match(/^##\s+v?(\d+\.\d+\.\d+(?:-\d+)?)/m);
         if (top) badge.textContent = "v" + top[1];
       }
     }).catch(function () {

@@ -18,6 +18,16 @@ You need Python 3.11+ and nothing else.
 
 See the [README](README.md#local-development) for what it does.
 
+## Tests
+
+```bash
+./tests/run.sh        # add -v for each test's name
+```
+
+Plain Python `unittest`, no dependencies. The tests check `VERSION.md` and the changelog, the
+`/changelogs/` page's version and section handling, the Discord previews and the favicon set.
+Run them before every release.
+
 ## Project conventions
 
 - **Static and dependency-free.** Plain HTML in `site/`, one stylesheet (`site/assets/site.css`)
@@ -27,7 +37,14 @@ See the [README](README.md#local-development) for what it does.
 - **Header and footer are repeated in every page.** When you change one, change all of them:
   `index.html`, `404.html`, `docs/index.html`, `changelogs/index.html`, `legal/index.html` and
   the six `legal/*/index.html` pages. Each page's `<head>` also carries the one-line theme boot
-  script, so the chosen theme applies before the page paints.
+  script, so the chosen theme applies before the page paints, and the same favicon tags
+  (`/favicon.ico`, `/assets/icon.png`, `/apple-touch-icon.png`, `/site.webmanifest`); a new page
+  needs them too.
+- **Discord previews.** Every page except `404.html` has a Discord link preview (a
+  `discord:component-embed` JSON block) in its `<head>`, generated from the page's `<title>`,
+  description and URL. After changing a page's title or description, or adding a page, run
+  `python scripts/build-discord-embeds.py` (after `build-sitemap.py`) and commit the result;
+  `--check` only reports pages that are out of date. Never edit the JSON by hand.
 - **Brand.** Dark `#0d1117` background, text `#f0f3f6` / `#c9d1d9`, muted `#8b949e`, and the
   `#b06bff` → `#3ba7ff` gradient from GitHup's social preview. The light theme uses `#f6f7fb` /
   white with `#16181d` / `#3b4250` text. Every colour is a token on `:root` in `site.css`,
@@ -45,8 +62,15 @@ See the [README](README.md#local-development) for what it does.
 
 ## Versioning and changelog
 
-- The version lives in `VERSION.md` (a bare version string). Bump it on every release.
+- GitHupWebsite uses [Date Versioning](https://datevers.ing): the version is the UTC release
+  date as `YY.MM.DD`, plus `-1`, `-2`... for later releases the same UTC day. Use UTC
+  (`date -u +%y.%m.%d`), never local time, and never a future date: check `git tag -l "vYY.MM.DD*"`
+  for today's date and take the next free number. Releases up to v1.4.4 used Semantic Versioning.
+- The version lives in `VERSION.md` (the bare version, no `v`). Bump it on every release, and
+  start the release's `CHANGELOG.md` entry with `## vYY.MM.DD`.
 - Every release gets a `CHANGELOG.md` entry using `###` subsections in this order: Added,
   Changed, Fixed, Removed, Security, Deprecated. Never a bare bullet list under a version.
-- `commit.sh` (bash) and `commit.bat` (Windows) read `VERSION.md`, commit and create the
-  annotated `vX.Y.Z` tag. Push with `git push origin main vX.Y.Z`.
+- `commit.sh` (bash) and `commit.bat` (Windows) read `VERSION.md`, refuse a version that isn't
+  a valid Date Version or is dated after today (UTC), warn when it's dated before today, then
+  commit and create the annotated `vYY.MM.DD` tag. They don't push: push with
+  `git push origin main vYY.MM.DD`.

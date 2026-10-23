@@ -16,8 +16,9 @@
 
 - **`site/`**: the static website (home page, `/docs/`, `/changelogs/` (with a redirect from
   `/changelog/`), `404.html`, the **Boring Legal Stuff** hub at `/legal/` with its six
-  sub-pages, and `assets/`). Plain HTML, one stylesheet and a few small
-  scripts, no build step. The look follows GitHup's social preview: the purple-to-blue
+  sub-pages, `assets/`, and the favicon set: `favicon.ico`, `apple-touch-icon.png` and
+  `site.webmanifest`). Plain HTML, one stylesheet and a few small scripts, no build step. The
+  look follows GitHup's social preview: the purple-to-blue
   (`#b06bff` → `#3ba7ff`) gradient on dark `#0d1117`, or on a light theme that follows the
   system until the header toggle picks one. `/docs/` renders GitHup's README (from the `v1`
   tag) in the browser, the same way `/changelogs/` renders the changelogs.
@@ -31,6 +32,10 @@
 - **`.github/workflows/site.yml`**: runs a GitHup `check` every 5 minutes, then (when a status
   changes, hourly, and on every push to `site/`) copies `site/`, `CHANGELOG.md` and `VERSION.md` into `_site`, builds the GitHup
   status page into `_site/demo` with `site-dir`, and deploys `_site` with `actions/deploy-pages`.
+- **`scripts/`**: small generators whose output is committed: `build-sitemap.py` (the sitemap
+  pages and `robots.txt`) and `build-discord-embeds.py` (the Discord link preview in each page's
+  `<head>`, with the Open Graph tags as its fallback).
+- **`tests/`**: plain-Python tests, no dependencies: `./tests/run.sh`.
 
 Incidents on the demo are real: when a demo monitor goes down, GitHup opens an Issue on this
 repository labelled `githup`, `incident` and `demo`, and closes it on recovery.
@@ -46,6 +51,13 @@ repository labelled `githup`, `incident` and `demo`, and closes it on recovery.
 monitors, builds the demo into `.dev/public/demo` and serves everything at
 `http://127.0.0.1:8000`, so `/demo/` works just as it does live. It uses GitHup from
 `$GITHUP_PATH`, a sibling `../GitHup` checkout, or a fresh clone in `.dev/GitHup`.
+
+## Versioning
+
+GitHupWebsite uses [Date Versioning](https://datevers.ing): each version is the UTC release date
+as `YY.MM.DD` (e.g. `v26.10.23`), plus `-1`, `-2`... for later releases the same UTC day
+(`v26.10.23-1`). The current version is in [`VERSION.md`](VERSION.md); releases up to v1.4.4 used
+Semantic Versioning. See [CHANGELOG.md](CHANGELOG.md) for what changed in each release.
 
 ## Hosting
 
