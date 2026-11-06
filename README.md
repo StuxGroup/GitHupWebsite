@@ -22,8 +22,8 @@
   (`#b06bff` → `#3ba7ff`) gradient on dark `#0d1117`, or on a light theme that follows the
   system until the header toggle picks one. `/docs/` renders GitHup's README (from the `v1`
   tag) in the browser, the same way `/changelogs/` renders the changelogs.
-- **`.githup.yml`**: the demo's monitors, in groups: Stux.Group services and companies, plus a
-  collapsed *Outage demo* group whose monitor (`thispagedoesnotexist.stuxgroup.net`) is meant
+- **`.githup.yml`**: the demo's monitors, in groups: the GitHup website, Stux.Group, some Stux.Group
+  brands and the Ream.st streaming sites, plus a collapsed *Outage demo* group whose monitor (`thispagedoesnotexist.stuxgroup.net`) is meant
   to be down, so the demo always shows an outage and a group opening itself.
 - **`CHANGELOG.md`** and **`VERSION.md`** are published with the site: `/changelogs/` renders
   the changelog (next to GitHup's own, fetched from its `v1` tag) and every footer shows the
@@ -67,7 +67,7 @@ at `stuxgroup.github.io`.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md). Work happens on `test` (or a branch off it), never on `main`. Changes reach `main` only through a pull request from `test`; the release commit and tag are made on `test` and go live when the pull request is merged.
 
 ## License
 

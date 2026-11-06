@@ -73,4 +73,5 @@ Run them before every release.
 - `commit.sh` (bash) and `commit.bat` (Windows) read `VERSION.md`, refuse a version that isn't
   a valid Date Version or is dated after today (UTC), warn when it's dated before today, then
   commit and create the annotated `vYY.MM.DD` tag. They don't push: push with
-  `git push origin main vYY.MM.DD`.
+  `git push origin test vYY.MM.DD`, then open a pull request from `test` into `main`.
+- Work happens on `test` (or a branch off it), never on `main`. Changes reach `main` only through a pull request from `test`; the release commit and tag are made on `test` and go live when the pull request is merged. The site deploys from `main`.

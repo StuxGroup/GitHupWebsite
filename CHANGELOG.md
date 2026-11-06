@@ -4,6 +4,15 @@ All notable changes to GitHupWebsite (githup.stux.group) are documented here. It
 [Date Versioning](https://datevers.ing): each version is the UTC release date as `YY.MM.DD`, plus
 `-1`, `-2`... for later releases the same day. Releases up to v1.4.4 used Semantic Versioning.
 
+## v26.11.06
+
+### Changed
+
+- `README.md` describes the demo's monitor groups as they are (the GitHup website, Stux.Group, some Stux.Group
+  brands and the Ream.st streaming sites, plus the outage demo)
+- `README.md` and `CONTRIBUTING.md` describe the branch flow: work and release tags on `test`, reaching `main` (and
+  the live site) through a pull request. `commit.sh` and `commit.bat` suggest pushing to `test`
+
 ## v26.10.23
 
 ### Added
