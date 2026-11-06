@@ -36,4 +36,4 @@ if errorlevel 1 (
     echo Tag v%VERSION% already exists - skipping.
 )
 
-echo Push with: git push origin main v%VERSION%
+echo Push with: git push origin test v%VERSION%

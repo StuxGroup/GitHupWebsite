@@ -42,4 +42,4 @@ else
     echo "Tagged v${VERSION}."
 fi
 
-echo "Push with: git push origin main v${VERSION}"
+echo "Push with: git push origin test v${VERSION}"
