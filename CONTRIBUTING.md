@@ -60,6 +60,12 @@ Run them before every release.
 - **Sitemap.** `site/sitemap.xml`, `site/sitemap/index.html` and `site/robots.txt` are generated: after adding or removing a page, edit the `PAGES` list in `scripts/build-sitemap.py` and run `python scripts/build-sitemap.py`, then commit the result. Every footer also links to **Sitemap** next to Boring Legal Stuff.
 - **Don't edit `data/` by hand.** It belongs to GitHup and the workflow.
 
+## Branches
+
+- Work on `test`, or on a feature branch off it. Never push to `main`
+- Changes reach `main` only through a pull request from `test` into `main`, which needs CI to pass and is reviewed and merged by Leo
+- Merging into `main` deploys githup.stux.group to GitHub Pages; release commits and tags are made on `test` (`git push origin test --tags`) and go live when the pull request is merged
+
 ## Versioning and changelog
 
 - GitHupWebsite uses [Date Versioning](https://datevers.ing): the version is the UTC release
@@ -74,4 +80,3 @@ Run them before every release.
   a valid Date Version or is dated after today (UTC), warn when it's dated before today, then
   commit and create the annotated `vYY.MM.DD` tag. They don't push: push with
   `git push origin test vYY.MM.DD`, then open a pull request from `test` into `main`.
-- Work happens on `test` (or a branch off it), never on `main`. Changes reach `main` only through a pull request from `test`; the release commit and tag are made on `test` and go live when the pull request is merged. The site deploys from `main`.
