@@ -1,0 +1,23 @@
+name: CI
+
+# Runs the tests on every push to main and test, and on pull requests, so a pull request
+# into main only merges once they pass.
+on:
+  push:
+    branches: [main, test]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run tests
+        run: bash tests/run.sh
