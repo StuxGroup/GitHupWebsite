@@ -198,7 +198,14 @@
       li.appendChild(el("span", "ms", m.ms ? m.ms + " ms" : "—"));
       list.appendChild(li);
     });
-    document.getElementById("demo-updated").textContent = "Updated " + ago(summary.updated);
+    var c = summary.cadence, every = "";
+    if (c && c.every) {  // the real rhythm GitHup measured over the last 24 h (GitHub runs the cron best-effort)
+      var mins = Math.max(1, Math.round(c.every / 60));
+      if (mins >= 60) mins = Math.round(mins / 10) * 10;
+      every = " · checked about every " + (mins < 60 ? mins + " min"
+        : Math.floor(mins / 60) + " h" + (mins % 60 ? " " + (mins % 60) + " min" : ""));
+    }
+    document.getElementById("demo-updated").textContent = "Updated " + ago(summary.updated) + every;
   }
   var first = LOCAL ? get(LOCAL_SUMMARY) : get(LIVE).catch(function () { return get(LOCAL_SUMMARY); });
   first.then(render).catch(function () {

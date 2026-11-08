@@ -28,8 +28,8 @@
 - **`CHANGELOG.md`** and **`VERSION.md`** are published with the site: `/changelogs/` renders
   the changelog (next to GitHup's own, fetched from its `v1` tag) and every footer shows the
   version.
-- **`data/`**: the demo's monitoring history, committed by `github-actions[bot]` every 5 minutes.
-- **`.github/workflows/site.yml`**: runs a GitHup `check` every 5 minutes, then (when a status
+- **`data/`**: the demo's monitoring history, committed by `github-actions[bot]` after every check.
+- **`.github/workflows/site.yml`**: runs a GitHup `check` on a `*/5` schedule (GitHub runs it best-effort, often far less often), then (when a status
   changes, hourly, and on every push to `site/`) copies `site/`, `CHANGELOG.md` and `VERSION.md` into `_site`, builds the GitHup
   status page into `_site/demo` with `site-dir`, and deploys `_site` with `actions/deploy-pages`.
 - **`scripts/`**: small generators whose output is committed: `build-sitemap.py` (the sitemap

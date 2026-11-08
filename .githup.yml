@@ -1,8 +1,8 @@
 # GitHup demo: the status page served at https://githup.stux.group/demo/
-# Checked every 5 minutes by .github/workflows/site.yml. Docs: https://github.com/StuxGroup/GitHup
+# Asks GitHub for a check every 5 minutes (best-effort; GitHub often runs it less often) - .github/workflows/site.yml. Docs: https://github.com/StuxGroup/GitHup
 site:
   name: GitHup Demo
-  description: A live GitHup status page, built by the GitHup action from this website's own repository. It checks a few Stux.Group services every 5 minutes.
+  description: A live GitHup status page, built by the GitHup action from this website's own repository. It checks a few Stux.Group services regularly.
   logo: https://githup.stux.group/assets/icon.svg
   favicon: https://githup.stux.group/assets/icon.png
   accent: "#8f7dff"

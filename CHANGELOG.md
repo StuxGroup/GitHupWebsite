@@ -4,6 +4,23 @@ All notable changes to GitHupWebsite (githup.stux.group) are documented here. It
 [Date Versioning](https://datevers.ing): each version is the UTC release date as `YY.MM.DD`, plus
 `-1`, `-2`... for later releases the same day. Releases up to v1.4.4 used Semantic Versioning.
 
+## v26.11.08
+
+### Added
+
+- The home page's demo card shows how often the demo was really checked, read from the new `cadence` in GitHup
+  v26.11.08's `summary.json`: "Updated 4 min ago · checked about every 2 h 40 min". Without that field it shows
+  only "Updated …" as before
+
+### Changed
+
+- The site no longer promises a check every 5 minutes, because GitHub runs the `*/5` schedule best-effort and
+  often only a few times a day. The home page lede, the demo card, the "Scheduled checks" feature card (was
+  "Checks every 5 minutes"), the quick start, the demo section, the demo's `.githup.yml` description and comment,
+  the workflow comment, the README and the home page's Discord preview now say "checked regularly" or that the
+  workflow *asks* for a check every 5 minutes
+- `site/sitemap.xml` regenerated, which also corrects two stale `lastmod` dates
+
 ## v26.11.06-1
 
 ### Added
