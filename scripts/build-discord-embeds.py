@@ -83,7 +83,7 @@ def home_embed(title: str, desc: str, url: str) -> str:
     return embed([
         section(f"# [{SITE_NAME}]({url})\n**Uptime monitoring and a status page, run entirely on GitHub.**\n" + discord_md(desc)),
         {"type": 14},
-        text("Checks every 5 minutes · History committed to your repo · Outages open Issues · Status page on GitHub Pages\n"
+        text("Scheduled checks · History committed to your repo · Outages open Issues · Status page on GitHub Pages\n"
              "-# No servers. No dependencies. MIT licensed. A Stux.Group Service."),
         buttons([("Live demo", BASE_URL + "/demo/"), ("Docs", BASE_URL + "/docs/"), ("GitHub", GITHUB)]),
     ])

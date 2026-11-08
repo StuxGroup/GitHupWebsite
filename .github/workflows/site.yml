@@ -4,7 +4,7 @@ name: Site
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # GitHup check (GitHub may run it a little late)
+    - cron: "*/5 * * * *"   # GitHup check (best-effort: GitHub often runs it far less often)
     - cron: "7 * * * *"     # hourly rebuild, so "updated" times stay fresh
   workflow_dispatch:
   push:
