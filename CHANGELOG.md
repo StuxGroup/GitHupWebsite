@@ -4,6 +4,13 @@ All notable changes to GitHupWebsite (githup.stux.group) are documented here. It
 [Date Versioning](https://datevers.ing): each version is the UTC release date as `YY.MM.DD`, plus
 `-1`, `-2`... for later releases the same day. Releases up to v1.4.4 used Semantic Versioning.
 
+## v26.11.13-1
+
+### Changed
+
+- The Imprint's registered office now ends in "England, United Kingdom": 124 City Road, London, EC1V 2NX, England,
+  United Kingdom
+
 ## v26.11.13
 
 ### Changed
