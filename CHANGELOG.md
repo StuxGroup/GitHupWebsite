@@ -11,7 +11,7 @@ All notable changes to GitHupWebsite (githup.stux.group) are documented here. It
 - The Imprint shows Stux Group Ltd's new registered office, 124 City Road, London, EC1V 2NX, England (was 82a James
   Carter Road, Mildenhall, England, IP28 7DE). The company number and "registered in England and Wales" are
   unchanged, and the Imprint's effective date is now 13 November 2026
-- `site/sitemap.xml` and the sitemap page regenerated (two `lastmod` dates catch up with the v26.11.08 release)
+- `site/sitemap.xml` regenerated: two `lastmod` dates catch up with the v26.11.08 release
 
 ## v26.11.08
 
