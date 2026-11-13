@@ -4,6 +4,22 @@ All notable changes to GitHupWebsite (githup.stux.group) are documented here. It
 [Date Versioning](https://datevers.ing): each version is the UTC release date as `YY.MM.DD`, plus
 `-1`, `-2`... for later releases the same day. Releases up to v1.4.4 used Semantic Versioning.
 
+## v26.11.13-1
+
+### Changed
+
+- The Imprint's registered office now ends in "England, United Kingdom": 124 City Road, London, EC1V 2NX, England,
+  United Kingdom
+
+## v26.11.13
+
+### Changed
+
+- The Imprint shows Stux Group Ltd's new registered office, 124 City Road, London, EC1V 2NX, England (was 82a James
+  Carter Road, Mildenhall, England, IP28 7DE). The company number and "registered in England and Wales" are
+  unchanged, and the Imprint's effective date is now 13 November 2026
+- `site/sitemap.xml` regenerated: two `lastmod` dates catch up with the v26.11.08 release
+
 ## v26.11.08
 
 ### Added
