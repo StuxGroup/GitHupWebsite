@@ -64,7 +64,9 @@ as `YY.MM.DD` (e.g. `v26.10.23`), plus `-1`, `-2`... for later releases the same
 (`v26.10.23-1`). The current version is in [`VERSION.md`](VERSION.md); releases up to v1.4.4 used
 Semantic Versioning. See [CHANGELOG.md](CHANGELOG.md) for what changed in each release.
 
-Releases are committed and tagged on the `test` branch and go live when the pull request from `test` into `main` is merged; see [Branches](CONTRIBUTING.md#branches).
+Releases are committed and tagged on the `test` branch, then go `test` → `staging` → `main` through pull requests;
+the site goes live when the pull request from `staging` into `main` is merged. See
+[Branches and going live](CONTRIBUTING.md#branches-and-going-live).
 
 ## Hosting
 
