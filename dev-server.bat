@@ -1,9 +1,11 @@
 @echo off
 setlocal
 REM GitHupWebsite - Local dev server (Windows)
-REM Usage: dev-server.bat [--no-dev-mode] [port]
+REM Usage: dev-server.bat [--no-dev-mode] [--lan] [port]
 REM   port            default: 8000
 REM   --no-dev-mode   render the site and demo exactly as production would
+REM   --lan           listen on all interfaces so phones/tablets on your network can
+REM                   connect (prints the addresses to open); default is 127.0.0.1 only
 REM
 REM Copies site\ into .dev\public, generates 90 days of example data for the
 REM demo monitors in .githup.yml, builds the GitHup status page into
@@ -17,12 +19,15 @@ REM website's own pages show the shared dev banner too (--no-dev-mode hides both
 
 set "DIR=%~dp0"
 set "PORT=8000"
+set "HOST=127.0.0.1"
 set "DEV_MODE=1"
 
 :args
 if "%~1"=="" goto run
 if /i "%~1"=="--no-dev-mode" (
     set "DEV_MODE=0"
+) else if /i "%~1"=="--lan" (
+    set "HOST=0.0.0.0"
 ) else (
     set "PORT=%~1"
 )
@@ -60,4 +65,11 @@ if "%DEV_MODE%"=="1" (
 ) else (
     echo GitHup website ^(production rendering^) at http://127.0.0.1:%PORT%/  -  demo at http://127.0.0.1:%PORT%/demo/
 )
-python -m http.server %PORT% --bind 127.0.0.1 --directory .dev/public
+if "%HOST%"=="0.0.0.0" (
+    echo On your local network ^(--lan^), open one of these on the other device:
+    for /f "tokens=2 delims=:" %%a in ('ipconfig ^| findstr /c:"IPv4"') do (
+        for /f "tokens=* delims= " %%b in ("%%a") do echo     http://%%b:%PORT%/
+    )
+    echo   ^(usually the 192.168.x.x one; allow Python through the firewall if asked^)
+)
+python -m http.server %PORT% --bind %HOST% --directory .dev/public
