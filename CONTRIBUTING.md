@@ -13,7 +13,7 @@ Issues and pull requests are welcome. Bugs or ideas for GitHup itself belong in
 You need Python 3.11+ and nothing else.
 
 ```bash
-./dev-server.sh [--no-dev-mode] [port]   # or dev-server.bat on Windows
+./dev-server.sh [--no-dev-mode] [--lan] [port]   # or dev-server.bat on Windows; --lan for other devices
 ```
 
 See the [README](README.md#local-development) for what it does.

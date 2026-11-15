@@ -4,6 +4,20 @@ All notable changes to GitHupWebsite (githup.stux.group) are documented here. It
 [Date Versioning](https://datevers.ing): each version is the UTC release date as `YY.MM.DD`, plus
 `-1`, `-2`... for later releases the same day. Releases up to v1.4.4 used Semantic Versioning.
 
+## v26.11.15
+
+### Added
+
+- `dev-server.sh`/`.bat --lan`: listens on `0.0.0.0` instead of `127.0.0.1` and prints a URL for each of the
+  machine's IPv4 addresses, so the site and demo open on phones and other devices on your network. Without it
+  the dev server stays on `127.0.0.1` only
+
+### Changed
+
+- The home page's demo preview treats private network addresses (`192.168.x.x`, `10.x`, `172.16-31.x`,
+  `100.64-127.x`) as local, like `127.0.0.1`, so over `--lan` it shows the local demo data instead of the live
+  repo's
+
 ## v26.11.13-1
 
 ### Changed

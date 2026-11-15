@@ -2,7 +2,9 @@
 (function () {
   "use strict";
 
-  var LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+  // Local dev: this machine, or another device on the network (dev-server --lan) using a private
+  // or CGNAT IPv4 address (10/8, 172.16/12, 192.168/16, 100.64/10).
+  var LOCAL = /^(localhost|127\.\d+\.\d+\.\d+|10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[01])\.\d+\.\d+|100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\.\d+\.\d+)$/.test(location.hostname);
   // Live data straight from the repo (updated every check); /demo/summary.json is the copy
   // published with each site build.
   var LIVE = "https://raw.githubusercontent.com/StuxGroup/GitHupWebsite/main/data/summary.json";

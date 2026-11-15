@@ -45,12 +45,17 @@ repository labelled `githup`, `incident` and `demo`, and closes it on recovery.
 ```bash
 ./dev-server.sh                 # or dev-server.bat on Windows; add a port as the last argument
 ./dev-server.sh --no-dev-mode   # production rendering, no dev banner
+./dev-server.sh --lan           # also reachable from phones/tablets on your network
 ```
 
 `dev-server` copies `site/` into `.dev/public`, generates 90 days of example data for the demo
 monitors, builds the demo into `.dev/public/demo` and serves everything at
 `http://127.0.0.1:8000`, so `/demo/` works just as it does live. It uses GitHup from
 `$GITHUP_PATH`, a sibling `../GitHup` checkout, or a fresh clone in `.dev/GitHup`.
+
+The server listens on `127.0.0.1` only. `--lan` listens on `0.0.0.0` instead and prints a URL for each of the
+machine's IPv4 addresses (usually the `192.168.x.x` one) to open on another device; allow Python through the
+firewall if asked. Opened that way, the home page's demo preview still reads the local `/demo/summary.json`.
 
 ## Versioning
 
