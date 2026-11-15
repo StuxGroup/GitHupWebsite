@@ -4,6 +4,18 @@ All notable changes to GitHupWebsite (githup.stux.group) are documented here. It
 [Date Versioning](https://datevers.ing): each version is the UTC release date as `YY.MM.DD`, plus
 `-1`, `-2`... for later releases the same day. Releases up to v1.4.4 used Semantic Versioning.
 
+## v26.11.15-1
+
+### Changed
+
+- Branches: releases now go `test` → `staging` → `main` through pull requests. `staging` is the last check before
+  live, and `main` (which deploys githup.stux.group) only changes through a pull request from `staging`.
+  `commit.sh`/`commit.bat` refuse to run on `staging` or `main` and print the push command and both
+  `gh pr create` commands after tagging
+- CI also runs on pushes to `staging`
+- CONTRIBUTING's "Branches" section is now "Branches and going live", and the README's Versioning section
+  describes the new flow
+
 ## v26.11.15
 
 ### Added

@@ -60,11 +60,17 @@ Run them before every release.
 - **Sitemap.** `site/sitemap.xml`, `site/sitemap/index.html` and `site/robots.txt` are generated: after adding or removing a page, edit the `PAGES` list in `scripts/build-sitemap.py` and run `python scripts/build-sitemap.py`, then commit the result. Every footer also links to **Sitemap** next to Boring Legal Stuff.
 - **Don't edit `data/` by hand.** It belongs to GitHup and the workflow.
 
-## Branches
+## Branches and going live
 
-- Work on `test`, or on a feature branch off it. Never push to `main`
-- Changes reach `main` only through a pull request from `test` into `main`, which needs CI to pass and is reviewed and merged by Leo
-- Merging into `main` deploys githup.stux.group to GitHub Pages; release commits and tags are made on `test` (`git push origin test --tags`) and go live when the pull request is merged
+- **`main` is what's live.** Nothing is pushed to it directly: it only changes when a pull request from `staging`
+  is merged, and merging into `main` deploys githup.stux.group to GitHub Pages.
+- **`staging` is the last check before live.** It only changes when a pull request from `test` is merged. There is
+  no separate staging deployment: check it with CI and `./dev-server.sh` on a `staging` checkout.
+- **Work happens on `test`**, or on a feature branch off `test` that's merged back into it. Releases are made on
+  `test` too; `commit.sh` / `commit.bat` refuse to run on `staging` or `main`.
+- **Going live:** push `test` with its tag, open a pull request into staging (`gh pr create --base staging --head test`),
+  check staging once it's merged, then open one from staging into main (`gh pr create --base main --head staging`).
+  CI runs on all three branches and on every pull request. Only Leo merges.
 
 ## Versioning and changelog
 
@@ -77,6 +83,7 @@ Run them before every release.
 - Every release gets a `CHANGELOG.md` entry using `###` subsections in this order: Added,
   Changed, Fixed, Removed, Security, Deprecated. Never a bare bullet list under a version.
 - `commit.sh` (bash) and `commit.bat` (Windows) read `VERSION.md`, refuse a version that isn't
-  a valid Date Version or is dated after today (UTC), warn when it's dated before today, then
-  commit and create the annotated `vYY.MM.DD` tag. They don't push: push with
-  `git push origin test vYY.MM.DD`, then open a pull request from `test` into `main`.
+  a valid Date Version or is dated after today (UTC), warn when it's dated before today, refuse to
+  run on `staging` or `main`, then commit and create the annotated `vYY.MM.DD` tag. They don't
+  push: push with `git push origin test --tags`, then open a pull request into `staging`, and
+  later one from `staging` into `main` (see [Branches and going live](#branches-and-going-live)).

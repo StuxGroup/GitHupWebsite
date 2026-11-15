@@ -4,7 +4,7 @@ name: CI
 # into main only merges once they pass.
 on:
   push:
-    branches: [main, test]
+    branches: [main, staging, test]
   pull_request:
 
 permissions:
